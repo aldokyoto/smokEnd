@@ -1,14 +1,18 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2FD36A5B022AC287A6C9BA7545C16722C5FE5254",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2FD36A5B022AC287A6C9BA7545C16722C5FE5254+++1E8499C",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "2FD36A5B022AC287A6C9BA7545C16722C5FE5254" : 0
+    "2FD36A5B022AC287A6C9BA7545C16722C5FE5254+++4AD3ECC" : 0,
+    "2FD36A5B022AC287A6C9BA7545C16722C5FE5254+++1E8499C" : 0,
+    "2FD36A5B022AC287A6C9BA7545C16722C5FE5254+++E7F212E" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "44CB1E3F-7380-4F84-9C21-FA56423188FF",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "2FD36A5B022AC287A6C9BA7545C16722C5FE5254" : ""
+    "2FD36A5B022AC287A6C9BA7545C16722C5FE5254+++4AD3ECC" : "",
+    "2FD36A5B022AC287A6C9BA7545C16722C5FE5254+++1E8499C" : "Git\/",
+    "2FD36A5B022AC287A6C9BA7545C16722C5FE5254+++E7F212E" : ""
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "smokEnd",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -17,12 +21,17 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/aldokyoto\/smokEnd",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2FD36A5B022AC287A6C9BA7545C16722C5FE5254"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2FD36A5B022AC287A6C9BA7545C16722C5FE5254+++1E8499C"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/aldokyoto\/smokEnd",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2FD36A5B022AC287A6C9BA7545C16722C5FE5254+++4AD3ECC"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/aldokyoto\/smokEnd.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2FD36A5B022AC287A6C9BA7545C16722C5FE5254"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2FD36A5B022AC287A6C9BA7545C16722C5FE5254+++E7F212E"
     }
   ]
 }
