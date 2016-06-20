@@ -15,11 +15,11 @@ protocol DestinationViewDelegate {
     
 }
 
-class AnalyticsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class AnalyticsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
 
     
-    //Array de prueba para el ejemplo(para borrar)
-    let swiftBlogs = ["Ray Wenderlich", "NSHipster", "iOS Developer Tips"]
+   
+    
     let textCellIdentifier = "TextCell"
     
     @IBOutlet var precioCigarros: UILabel!
@@ -33,6 +33,8 @@ class AnalyticsViewController: UIViewController, UITableViewDataSource, UITableV
 
    let moc = AppDelegate().managedObjectContext
     let consulta = NSFetchRequest(entityName: "DatosBD")
+   // var fetchedResultsController: NSFetchedResultsController!
+    
     
     var labelText = String()
     var labelNcigarros = String()
@@ -50,7 +52,16 @@ class AnalyticsViewController: UIViewController, UITableViewDataSource, UITableV
     var moneySpendCigarettesSmokeDaily = Float(0)
     var contador = 0
     var error: NSError? = nil
+ 
+  
+    lazy var context: NSManagedObjectContext = {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        return appDelegate.managedObjectContext
+    }()
 
+    var fetchedResultsController: NSFetchedResultsController!
+    
+       
     
     
     func viewWillAppear() {
@@ -70,47 +81,122 @@ class AnalyticsViewController: UIViewController, UITableViewDataSource, UITableV
         dineroAhorraMes.text = labelAhorradoMes
         dineroAhorradoAno.text = labelAhorradoAno
         cigarrosFumados.text = labelCigarrosFumados
-    }
+        
+        
+        //1
+        let fetchRequest = NSFetchRequest(entityName: "DatosBD")
+        let fetchSort = NSSortDescriptor(key: "cigarrosFumados", ascending: true)
+        fetchRequest.sortDescriptors = [fetchSort]
+        
+        //2
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        
+        //3
+        do {
+            try fetchedResultsController.performFetch()
+            
+        } catch let error as NSError {
+            print("Unable to perform fetch: \(error.localizedDescription)")
+        }
+        
+        
+          }
 
     
     override func viewDidAppear(animated: Bool) {
         
         readData()
+        //self.tableView.reloadData()
+        
         
     }
 
-
+  
+    
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-      /*  if let sections = fetchedResultsController.sections {
+      //  return 1
+       if let sections = fetchedResultsController.sections {
             return sections.count
         }
         
         return 0
-        */
+        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return swiftBlogs.count
+        //return swiftBlogs.count
+        
+        guard let sectionData = fetchedResultsController.sections?[section] else {
+            return 0
+        }
+        return sectionData.numberOfObjects
+        
     }
         
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath)
         
-        let row = indexPath.row
-        cell.textLabel?.text = swiftBlogs[row]
+     //   let row = indexPath.row
+     //   cell.textLabel?.text = swiftBlogs[row]
         
+    //    return cell
+        
+       
+        let movie = fetchedResultsController.objectAtIndexPath(indexPath) as! DatosBD
+        
+       // let cell = tableView.dequeueReusableCellWithIdentifier("movieCell")!
+        
+        cell.textLabel?.text = String(movie.cigarrosPulsados!)
         return cell
+        
+    }
+    
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        //tableView.reloadData()
+        tableView.endUpdates()
+        
+       // let indexPath = NSIndexPath(forRow: 1, inSection: 0)
+       // self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Top)
+    }
+    
+    
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        // 1
+        switch type {
+        case .Insert:
+            tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
+        case .Delete:
+            tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
+        default: break
+        }
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        // 2
+        switch type {
+        case .Insert:
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Automatic)
+        case .Delete:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
+        default: break
+        }
     }
     
     //Optional, solo si quieres pulsar una celda
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let row = indexPath.row
-        print(swiftBlogs[row])
+       // let row = indexPath.row
+       // print(swiftBlogs[row])
+        print("Has pulsado la celda")
     }
     
     
@@ -224,7 +310,10 @@ class AnalyticsViewController: UIViewController, UITableViewDataSource, UITableV
             
             
         }
+       
         readData()
+        
+        
    }
 
 
